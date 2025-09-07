@@ -1,0 +1,30 @@
+# --- Python build artefacts
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyc
+
+# --- Virtual environments
+.venv/
+venv/
+
+# --- OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+
+# --- Env & secrets (never commit secrets)
+.env
+*.env
+
+# Streamlit secrets (pick ONE approach below)
+# Option A: ignore the whole .streamlit folder
+#.streamlit/
+
+# Option B: keep non-secret config but ignore secrets only
+.streamlit/secrets.toml
+
+# --- App runtime data (persisted state & exports)
+# Keep the folder but ignore its contents:
+data/*
+!data/.gitkeep
