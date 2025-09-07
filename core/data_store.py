@@ -5,6 +5,7 @@ import pickle
 #Suggestions to self for later improvement --
 # 1) could add 2 new sections to the snack database , "brand, "snack_flavor"
 # 2) could later add a new section to the database for "supplier" and maybe even "price_paid" so that I can distinguish price I paid, vs the price I could sell it for
+# 3) I could also add update_pricing() and update_qty() as functions that would get pulled from back end into the front end as forms on streamlit
 
 #-----refencing MMv2 Directory--------
 
