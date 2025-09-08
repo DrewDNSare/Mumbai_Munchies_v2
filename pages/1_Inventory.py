@@ -2,6 +2,7 @@ import streamlit as st
 st.title("Inventory Page")
 import pickle as pk
 import datetime as dt
+import time
 
 # ----- imports from internal modules ------
 
@@ -36,12 +37,30 @@ if add_submit_button :
     add_result = add_snack(add_data)
     if add_result == False :
         st.write("Error Occured : Quantity may not be below 0 : Add not Succesful")
+        st.rerun()
     else: 
         st.write(f"{add_data['name']} Succesfully Added to the inventory")
         st.rerun()
 
 #-----------------Remove Snack-----------------------------------------------
 
+st.header("Remove a Snack")
+with st.form(key="remove_snack_form") :
+    inv = load_inventory()
+    options = []
+    for ea_id in inv :
+        options.append(ea_id["id"])
+    selected_for_removal = st.multiselect("Please Choose the ID of the Snack you wish to remove : ",options)
+    # I'm thinking that the multiselect makes the datatype string by default
+    remove_submit_button = st.form_submit_button("Submit")
+
+if remove_submit_button :
+    for each in selected_for_removal :
+        remove_result , result_message = remove_snack(each)
+        st.toast(result_message,icon="ℹ️")
+        st.warning("Refeshing...")
+        time.sleep(4)
+    st.rerun()
 
 #-----------------Update Qty-------------------------------------------------
 
@@ -52,4 +71,3 @@ if add_submit_button :
 #-----------------Remove Hold------------------------------------------------
 
 
-#-----------------Record a Sale----------------------------------------------

@@ -1,6 +1,6 @@
 #The purpose of this file is for very very rudimentary testing
 from .data_store import load_inventory,save_inventory,load_sales,save_sales
-from .services import add_snack,remove_snack, place_on_hold, remove_hold, record_sale
+from .services import add_snack,remove_snack, place_on_hold, remove_hold, record_sale , _find_index_by_id
 
 def _wipe_inventory() :
     inv = load_inventory()
@@ -32,12 +32,18 @@ def _wipe_inventory() :
 # remove_hold(101)
 # remove_hold(102)
 
-b , Mes1 = record_sale(104,5)
-print(Mes1)
+# b , Mes1 = record_sale(104,5)
+# print(Mes1)
 
 inv = load_inventory()
-for each_snack in inv :
-    print(each_snack)
+
+# value = _find_index_by_id(inv,105)
+
+success , result_message = remove_snack(105)
+print(success,result_message)
+
+# for each_snack in inv :
+#     print(each_snack)
 
 # for ea in inv : 
 #     print(ea["id"])
@@ -50,3 +56,4 @@ for each_snack in inv :
 #     success_message += str(ea)
 #     success_message += " "
 # print(success_message)
+

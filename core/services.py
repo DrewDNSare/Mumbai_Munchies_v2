@@ -54,12 +54,14 @@ def remove_snack(snack_id) :
     else :
         removal_message = ""
         success = True
-        message = "\nAction Succesful : Snack ID :",snack_id,"|","Snack Name :",inv[index]["name"]
+        message = "\nAction Succesful : Snack ID :",snack_id,"|","Snack Name :",inv[index]["name"] ,"has been successfully removed from the inventory"
         for ea in message :
             removal_message += str(ea)
             removal_message += " "
+        message = removal_message
         inv.remove(inv[index])
         save_inventory(inv)
+        return success, message
 
 #--Place On-hold
 
