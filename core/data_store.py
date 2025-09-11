@@ -41,7 +41,7 @@ def save_inventory(input_items) :
     #--read sales-pickle-file
 
 def load_sales() :
-    if SALES_PATH.exists() and SALES_PATH.is_file() and INV_PATH.stat().st_size > 0:
+    if SALES_PATH.exists() and SALES_PATH.is_file() and SALES_PATH.stat().st_size > 0:
         with SALES_PATH.open("rb") as f:
             return pickle.load(f)
     else: 
@@ -58,4 +58,12 @@ def save_sales(input_items) :
 
 
 
+#--------Sales testing------------
 
+def test_sales() :
+    with open(SALES_PATH,"wb") as f :
+        pickle.dump([],f)
+
+if __name__ == '__main__' :
+    test_sales()
+    print("success")

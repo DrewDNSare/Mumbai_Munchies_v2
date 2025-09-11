@@ -12,6 +12,17 @@ def _wipe_inventory() :
 
 # _wipe_inventory()
 
+def _wipe_sales() :
+    sls = load_sales()
+    print(f"Sales before wipe : \n {inv}\n")
+    sls = []
+    save_inventory(inv)
+    inv = load_inventory()
+    print(f"Sales after wipe : \n {inv}")
+
+
+# _wipe_sales()
+
 
 # ----Add Snack Testing
 # test_snack1 = {"id":101,"name":"example_snack1","price":101,"stock_qty":101,"on_hold":False}
@@ -35,18 +46,19 @@ def _wipe_inventory() :
 # b , Mes1 = record_sale(104,5)
 # print(Mes1)
 
-inv = load_inventory()
+# inv = load_inventory()
+# for ea in inv : 
+#     print(ea["id"])
 
 # value = _find_index_by_id(inv,105)
 
-success , result_message = remove_snack(105)
-print(success,result_message)
+# success , result_message = remove_snack(105)
+# print(success,result_message)
 
 # for each_snack in inv :
 #     print(each_snack)
 
-# for ea in inv : 
-#     print(ea["id"])
+
 
 # x = 105
 # y = "Potato Chips"
@@ -57,3 +69,5 @@ print(success,result_message)
 #     success_message += " "
 # print(success_message)
 
+sls = load_sales() 
+print(f"Loaded Sales : ",sls)

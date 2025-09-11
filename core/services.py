@@ -4,7 +4,7 @@ from .data_store import load_inventory , save_inventory , load_sales , save_sale
 
 #---------other imports--------------------------------
 
-import datetime as dt
+from datetime import datetime
 
 #---------internal helper functions--------------------
 
@@ -22,26 +22,56 @@ def _find_index_by_id(inventory_list,snack_id) :
 def list_inventory_for_UI(inventory_list) :
     return [{**each_item,"available":each_item["stock_qty"] > 0 and not each_item["on_hold"]} for each_item in inventory_list]
 
-#--Add Snack
+#------Assign New ID for added Snack--------------------
 
-def add_snack(snack):  # dict: {id, name, price, initially_on-hold?} -- maybe I could use a form in Streamlit to collect?
-    success = False
+def assign_new_id() :
     inv = load_inventory()
-    # if _find_index_by_id(inv,snack["id"]) != None :
-    #     print("This snack already exists, try again")
-    #     return
+    new_id = 101
+    ids = {ea["id"] for ea in inv}
+    while new_id in ids : 
+        new_id += 1
+    return new_id
+
+#------List of Current Ids-------------
+def list_of_current_ids() :
+    inv = load_inventory()
+    options = []
+    for ea_id in inv :
+        options.append(ea_id["id"])
+    return options
+
+#---------------Add Snack--------------------------------
+
+def add_snack(snack):  
+    success = False
+    message = ""
+    inv = load_inventory()
+    try :
+        int(snack["name"])
+    except (ValueError , TypeError , Exception ) :
+        pass
+    else :
+        message = "Error : Action not Succesful : Snack Name must not be only numbers"
+        return success , message
     if snack["stock_qty"] < 0 :
-        # print("Snack quantity must not be below 0\nPlease try again")
-        return success
-    # print(inv,"\n\n")
-    inv.append(snack)
-    save_inventory(inv)
-    sucess = True
-    return success
-    # print(inv,"\n\n")
+        message = "Error : Action not Succesful : Snack quantity must not be below 0"
+        return success , message
+    elif len(snack["name"]) == 0 :
+        message = "Error: Action not Succesful : Snack Name must not be blank"
+        return success , message
+    else :
+        sucess = True
+        message = ("A new snack named " ,snack["name"], " has successfully been added and assigned the ID :" , str(snack["id"]) )
+        success_message = ""
+        for ea in message :
+            success_message += ea
+        message = success_message
+        inv.append(snack)
+        save_inventory(inv)
+        return success , message 
     
 
-#--Remove Snack
+#-----------Remove Snack-----------------------------------------
 
 def remove_snack(snack_id) :
     success = False
@@ -116,6 +146,8 @@ def _subtract_stock(snack_id,qty_to_remove) :
     elif ((inv[index]["stock_qty"]) - qty_to_remove <= 0 ) :
         message = "Error: Action Not Succesful : You cannot subtract more quantity than currently in inventory."
         return success , message 
+    elif inv[index]["on_hold"] == True :
+        message = "Error : Action Not Succesful : Item currently on hold and cannot be sold"
     else :
         inv[index]["stock_qty"] -= qty_to_remove
         save_inventory(inv)
@@ -134,14 +166,26 @@ def record_sale(snack_id,qty_sold) :
     success = False 
     message = " "
     inv = load_inventory() 
+    sls = load_sales()
     index = _find_index_by_id(inv,snack_id)
     subtract_stock_success , subtract_message = _subtract_stock(snack_id,qty_sold) # assigns a Boolean and the message from the internal function _subtract_stock()
     if subtract_stock_success == False :
         message = "Error : Action not Succesful : Item Unable to be Sold\n"
-        return success , message , subtract_message
+        message += subtract_message
+        return success , message
     else : 
         success = True 
         message = "Action Succesful : Item Sold\n"
         message += subtract_message
+        inv[index]["stock_qty"] = (inv[index]["stock_qty"] - qty_sold)
+
+        name = inv[index]["name"]
+        price = inv[index]["price"]
+        money_collected = (inv[index]["price"] * qty_sold)
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sales_data = {"id": snack_id , "name":name , "price":price ,"quantity_sold":qty_sold, "money_collected":money_collected, "timestamp":timestamp}
+        sls.append(sales_data)
+        save_sales(sls)
+        save_inventory(inv)
         return success , message 
     

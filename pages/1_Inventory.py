@@ -8,7 +8,7 @@ import time
 
 from core.data_store import load_inventory 
 
-from core.services import add_snack, remove_snack , place_on_hold , remove_hold , list_inventory_for_UI
+from core.services import add_snack, remove_snack ,  place_on_hold , remove_hold , list_inventory_for_UI , assign_new_id , list_of_current_ids
 
 
 #-------------------Table for all snacks-----------------------------------------------------
@@ -22,10 +22,7 @@ st.table(data_for_table)
 st.header("Add a Snack")
 
 with st.form(key="Add_Snack_Form") :
-    new_id = 101
-    ids = {ea["id"] for ea in data}
-    while new_id in ids : 
-        new_id += 1
+    new_id = assign_new_id()
     name = st.text_input("New Snack Name : ")
     price = st.number_input("Price in $ : ", min_value = 0.00, step = .01, format = "%.2f")
     stock_qty = st.number_input("Total Starting Stock Amount : ",min_value = 0 , step = 1)
@@ -34,22 +31,17 @@ with st.form(key="Add_Snack_Form") :
     add_submit_button = st.form_submit_button("Submit")
 
 if add_submit_button :
-    add_result = add_snack(add_data)
-    if add_result == False :
-        st.write("Error Occured : Quantity may not be below 0 : Add not Succesful")
-        st.rerun()
-    else: 
-        st.write(f"{add_data['name']} Succesfully Added to the inventory")
-        st.rerun()
-
+    add_result , add_message = add_snack(add_data)
+    st.toast(add_message,icon="ℹ️")
+    st.warning("Refreshing...")
+    time.sleep(4)
+    st.rerun()
+    
 #-----------------Remove Snack-----------------------------------------------
 
 st.header("Remove a Snack")
 with st.form(key="remove_snack_form") :
-    inv = load_inventory()
-    options = []
-    for ea_id in inv :
-        options.append(ea_id["id"])
+    options = list_of_current_ids()
     selected_for_removal = st.multiselect("Please Choose the ID of the Snack you wish to remove : ",options)
     # I'm thinking that the multiselect makes the datatype string by default
     remove_submit_button = st.form_submit_button("Submit")
@@ -62,7 +54,6 @@ if remove_submit_button :
         time.sleep(4)
     st.rerun()
 
-#-----------------Update Qty-------------------------------------------------
 
 
 #-----------------Place on Hold----------------------------------------------
@@ -71,3 +62,7 @@ if remove_submit_button :
 #-----------------Remove Hold------------------------------------------------
 
 
+#-----------------Update Qty-------------------------------------------------
+
+# Product Loss
+# Shipment Receieved
