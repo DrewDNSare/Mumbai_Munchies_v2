@@ -25,7 +25,7 @@ Demo of completed version 2.
 
 Inventory page : 
 
-![Inventory Demo](./gifs/mmv2_inventory_page.gif)
+<img src="gifs/mmv2_inventory_page.gif" width="800" alt="Inventory Demo" />
 
 Sales page : 
 
