@@ -29,4 +29,4 @@ Inventory page :
 
 Sales page : 
 
-![Inventory Demo](./gifs/mmv2_sales_page.gif)
+![Inventory Demo](https://raw.githubusercontent.com/DrewDNSare/Mumbai_Munchies_v2/master/gifs/mmv2_sales_page.gif)
