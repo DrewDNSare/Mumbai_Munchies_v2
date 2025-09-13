@@ -18,3 +18,15 @@ It's best to run it as a module since Windows may act strange and not run it if 
 
 As of 06 Sep 2025 the Add_snack front end feature is available to see. More front end features will be added shortly. The functions for the app are mostly there,
 its just the unintended bugs that need to be worked out before more front-end features can be added. 
+
+---------- 13 Sep 2025 ------------
+
+Demo of completed version 2. 
+
+Inventory page : 
+
+![Demo](gifs/mmv2_invetory_page.gif)
+
+Sales page : 
+
+![Demo](gifs/mmv2_sales_page.gif)
