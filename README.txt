@@ -25,7 +25,7 @@ Demo of completed version 2.
 
 Inventory page : 
 
-![Demo](gifs/mmv2_invetory_page.gif)
+![Demo](gifs/mmv2_inventory_page.gif)
 
 Sales page : 
 
