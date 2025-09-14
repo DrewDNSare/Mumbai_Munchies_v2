@@ -25,8 +25,8 @@ Demo of completed version 2.
 
 Inventory page : 
 
-![Inventory Demo](https://raw.githubusercontent.com/DrewDNSare/Mumbai_Munchies_v2/gifs/mmv2_inventory_page.gif)
+![Inventory Demo](https://raw.githubusercontent.com/DrewDNSare/Mumbai_Munchies_v2/master/gifs/mmv2_inventory_page.gif)
 
 Sales page : 
 
-![Inventory Demo](https://raw.githubusercontent.com/DrewDNSare/Mumbai_Munchies_v2/gifs/mmv2_sales_page.gif)
+![Inventory Demo](https://raw.githubusercontent.com/DrewDNSare/Mumbai_Munchies_v2/master/gifs/mmv2_sales_page.gif)
